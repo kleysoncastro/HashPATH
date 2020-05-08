@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import br.com.castro.application.files.ManipulationFile;
 import br.com.castro.hash.Hash;
 
 public class Main {
@@ -13,23 +14,46 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		Hash hash = new Hash();
-		Scanner s = new Scanner(System.in);
 		System.out.println("HashPath file or string");
-		path = s.next();
-		try {
 
+		Scanner s = new Scanner(System.in);
+		path = s.next();
+		if (!(new File(path).exists())) {
+			System.err.println("Error, Check the path");
+			return;
+		} else {
+			hashFilesInPath(path);
+		}
+		s.close();
+
+	}
+
+	public static void hashFile(String path) {
+		Hash hash = new Hash();
+		try {
+			
 			File f = new File(path);
 			fileName = f.getName();
 
 			byte[] hashByte = hash.generateHash(f, "SHA-256");
 
-			System.out.printf("%s \t %s", hash.hashToHex(hashByte), fileName);
+			System.out.printf("%s \t %s\n", hash.hashToHex(hashByte), fileName);
 
 		} catch (IOException e) {
-			System.out.printf("Error, check the path: %s\n", path);
+			System.err.printf("Error, check the path or permission: %s\n", path);
 		}
+	}
 
+	public static void hashFilesInPath(String path) {
+
+		ManipulationFile list = new ManipulationFile();
+
+		String[] lists = ManipulationFile.listFilesInPath(path);
+
+		for (String string : lists) {
+			//System.out.println(path + "/" + string);
+			hashFile(path + "/" + string);
+		}
 	}
 
 }
