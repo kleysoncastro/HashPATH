@@ -1,4 +1,4 @@
-package br.com.castro.application.files;
+package br.com.castro.files;
 
 import java.io.File;
 

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-import br.com.castro.application.files.ManipulationFile;
+import br.com.castro.files.ManipulationFile;
 import br.com.castro.hash.Hash;
 
 public class Main {
